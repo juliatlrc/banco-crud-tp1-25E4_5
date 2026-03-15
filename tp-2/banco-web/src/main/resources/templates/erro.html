@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Erro</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f5f6fa; }
+        header { background: #1a1a2e; color: white; padding: 18px 32px; }
+        main { max-width: 500px; margin: 60px auto; text-align: center; }
+        .caixa-erro {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        h2 { color: #c0392b; margin-bottom: 16px; }
+        p { color: #555; margin-bottom: 24px; }
+        a { color: #1a1a2e; font-weight: bold; }
+    </style>
+</head>
+<body>
+<header><h1>🏦 Banco CRUD</h1></header>
+<main>
+    <div class="caixa-erro" id="pagina-erro">
+        <h2>Ops! Algo deu errado.</h2>
+        <p th:text="${erro}">Ocorreu um erro inesperado.</p>
+        <a href="/contas">← Voltar para a listagem</a>
+    </div>
+</main>
+</body>
+</html>

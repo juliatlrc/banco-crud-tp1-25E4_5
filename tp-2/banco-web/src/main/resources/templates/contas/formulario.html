@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title th:text="${acao == 'nova'} ? 'Nova Conta' : 'Editar Conta'">Formulário</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f6fa; color: #222; }
+
+        header {
+            background: #1a1a2e;
+            color: white;
+            padding: 18px 32px;
+        }
+        header h1 { font-size: 1.3rem; }
+
+        main { max-width: 500px; margin: 40px auto; padding: 0 16px; }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+        }
+        .card h2 { margin-bottom: 24px; color: #1a1a2e; }
+
+        .campo { margin-bottom: 18px; }
+        label { display: block; font-size: 0.9rem; font-weight: bold; margin-bottom: 6px; }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        input:focus { outline: none; border-color: #1a1a2e; }
+
+        .erro-campo {
+            color: #c0392b;
+            font-size: 0.82rem;
+            margin-top: 4px;
+        }
+
+        .acoes {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: #1a1a2e; color: white; }
+        .btn-primary:hover { background: #333366; }
+        .btn-secundario { background: #ccc; color: #333; }
+        .btn-secundario:hover { background: #bbb; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏦 Banco CRUD</h1>
+</header>
+
+<main>
+    <div class="card">
+        <h2 th:text="${acao == 'nova'} ? 'Nova Conta' : 'Editar Conta'">Formulário</h2>
+
+        <!-- Formulário de nova conta -->
+        <form th:if="${acao == 'nova'}"
+              th:action="@{/contas/nova}"
+              th:object="${contaForm}"
+              method="post"
+              id="form-conta">
+
+            <div class="campo">
+                <label for="nome">Nome do Titular</label>
+                <input type="text" id="nome" th:field="*{nome}" placeholder="Ex: João Silva"/>
+                <span class="erro-campo" th:if="${#fields.hasErrors('nome')}"
+                      th:errors="*{nome}" id="erro-nome"></span>
+            </div>
+
+            <div class="campo">
+                <label for="saldo">Saldo Inicial (R$)</label>
+                <input type="number" id="saldo" th:field="*{saldo}"
+                       step="0.01" min="0" placeholder="0.00"/>
+                <span class="erro-campo" th:if="${#fields.hasErrors('saldo')}"
+                      th:errors="*{saldo}" id="erro-saldo"></span>
+            </div>
+
+            <div class="acoes">
+                <button type="submit" class="btn btn-primary" id="btn-salvar">Salvar</button>
+                <a href="/contas" class="btn btn-secundario">Cancelar</a>
+            </div>
+        </form>
+
+        <!-- Formulário de edição -->
+        <form th:if="${acao == 'editar'}"
+              th:action="@{/contas/{id}/editar(id=${contaId})}"
+              th:object="${contaForm}"
+              method="post"
+              id="form-conta">
+
+            <div class="campo">
+                <label for="nome">Nome do Titular</label>
+                <input type="text" id="nome" th:field="*{nome}"/>
+                <span class="erro-campo" th:if="${#fields.hasErrors('nome')}"
+                      th:errors="*{nome}" id="erro-nome"></span>
+            </div>
+
+            <div class="campo">
+                <label for="saldo">Saldo (R$)</label>
+                <input type="number" id="saldo" th:field="*{saldo}" step="0.01" min="0"/>
+                <span class="erro-campo" th:if="${#fields.hasErrors('saldo')}"
+                      th:errors="*{saldo}" id="erro-saldo"></span>
+            </div>
+
+            <div class="acoes">
+                <button type="submit" class="btn btn-primary" id="btn-salvar">Salvar</button>
+                <a href="/contas" class="btn btn-secundario">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+</body>
+</html>
