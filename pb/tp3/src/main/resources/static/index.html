@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banco CRUD</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>&#127981; Banco CRUD</h1>
+    <p>Gerenciamento de contas bancárias</p>
+</header>
+
+<main>
+    <!-- Formulário de cadastro / edição -->
+    <section class="card">
+        <h2 id="form-titulo">Nova Conta</h2>
+        <form id="formConta" novalidate>
+            <input type="hidden" id="contaId">
+
+            <div class="campo">
+                <label for="nome">Nome do titular</label>
+                <input type="text" id="nome" placeholder="Ex: Maria Oliveira" maxlength="100" required>
+                <span class="erro" id="erroNome"></span>
+            </div>
+
+            <div class="campo">
+                <label for="saldo">Saldo inicial (R$)</label>
+                <input type="number" id="saldo" placeholder="0.00" min="0" step="0.01" required>
+                <span class="erro" id="erroSaldo"></span>
+            </div>
+
+            <div class="botoes-form">
+                <button type="submit" id="btnSalvar">Salvar</button>
+                <button type="button" id="btnCancelar" onclick="limparForm()" style="display:none">Cancelar</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Barra de busca -->
+    <section class="card">
+        <div class="busca-row">
+            <input type="text" id="busca" placeholder="Buscar por nome..." oninput="buscarContas()">
+            <button onclick="carregarContas()">&#128260; Atualizar</button>
+        </div>
+    </section>
+
+    <!-- Toast de feedback -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Tabela de contas -->
+    <section class="card">
+        <h2>Contas cadastradas</h2>
+        <div id="tabelaWrapper">
+            <table id="tabelaContas">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Saldo</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpoTabela">
+                    <tr><td colspan="4" class="vazio">Carregando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<!-- Modal de confirmação de exclusão -->
+<div id="modalExcluir" class="modal-overlay" style="display:none">
+    <div class="modal">
+        <p>&#9888;&#65039; Tem certeza que deseja excluir esta conta?</p>
+        <div class="botoes-form">
+            <button id="btnConfirmarExcluir" class="btn-perigo">Excluir</button>
+            <button onclick="fecharModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
