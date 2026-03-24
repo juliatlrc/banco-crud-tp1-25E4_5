@@ -1,0 +1,146 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f4f8;
+    color: #333;
+    min-height: 100vh;
+}
+
+header {
+    background: #1a3c5e;
+    color: white;
+    padding: 24px 32px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+header h1 { font-size: 1.8rem; margin-bottom: 4px; }
+header p  { font-size: 0.9rem; opacity: 0.8; }
+
+main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.card h2 { margin-bottom: 18px; color: #1a3c5e; font-size: 1.1rem; }
+
+.campo { margin-bottom: 16px; }
+.campo label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #555;
+}
+.campo input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.2s;
+}
+.campo input:focus { outline: none; border-color: #1a3c5e; }
+.campo input.invalido { border-color: #d32f2f; }
+
+.erro {
+    display: block;
+    color: #d32f2f;
+    font-size: 0.8rem;
+    margin-top: 4px;
+    min-height: 16px;
+}
+
+.botoes-form { display: flex; gap: 10px; margin-top: 8px; }
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    background: #1a3c5e;
+    color: white;
+    transition: background 0.2s;
+}
+button:hover { background: #14304d; }
+button.btn-perigo { background: #d32f2f; }
+button.btn-perigo:hover { background: #b71c1c; }
+#btnCancelar { background: #888; }
+#btnCancelar:hover { background: #666; }
+
+.busca-row { display: flex; gap: 10px; align-items: center; }
+.busca-row input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+.busca-row input:focus { outline: none; border-color: #1a3c5e; }
+
+table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+thead tr { background: #1a3c5e; color: white; }
+th, td { padding: 12px 14px; text-align: left; }
+tbody tr:nth-child(even) { background: #f7f9fc; }
+tbody tr:hover { background: #e8f0f8; }
+td.vazio { text-align: center; color: #888; font-style: italic; padding: 24px; }
+
+.btn-acao { padding: 6px 12px; font-size: 0.8rem; margin-right: 6px; }
+.btn-editar { background: #f57c00; }
+.btn-editar:hover { background: #e65100; }
+
+.toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: white;
+    display: none;
+    z-index: 9999;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    animation: slideIn 0.3s ease;
+}
+.toast.sucesso { background: #2e7d32; }
+.toast.erro    { background: #c62828; }
+.toast.info    { background: #1565c0; }
+
+@keyframes slideIn {
+    from { transform: translateX(60px); opacity: 0; }
+    to   { transform: translateX(0);    opacity: 1; }
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal {
+    background: white;
+    border-radius: 10px;
+    padding: 30px;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+    text-align: center;
+}
+.modal p { margin-bottom: 20px; font-size: 1rem; color: #444; }
