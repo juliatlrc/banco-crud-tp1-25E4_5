@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Contas Bancárias</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f6fa; color: #222; }
+
+        header {
+            background: #1a1a2e;
+            color: white;
+            padding: 18px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 { font-size: 1.3rem; }
+
+        main { max-width: 900px; margin: 32px auto; padding: 0 16px; }
+
+        .alerta-sucesso {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 10px 16px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+        .btn-primary { background: #1a1a2e; color: white; }
+        .btn-primary:hover { background: #333366; }
+        .btn-editar { background: #f0ad4e; color: white; }
+        .btn-editar:hover { background: #ec971f; }
+        .btn-excluir { background: #d9534f; color: white; }
+        .btn-excluir:hover { background: #c9302c; }
+
+        .topo-lista {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        thead { background: #1a1a2e; color: white; }
+        th, td { padding: 12px 16px; text-align: left; font-size: 0.95rem; }
+        tbody tr:nth-child(even) { background: #f9f9f9; }
+        tbody tr:hover { background: #eef0f8; }
+
+        .sem-contas {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            background: white;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🏦 Banco CRUD</h1>
+    <span>Sistema de Contas Bancárias</span>
+</header>
+
+<main>
+    <div th:if="${sucesso}" class="alerta-sucesso" id="mensagem-sucesso">
+        <span th:text="${sucesso}"></span>
+    </div>
+
+    <div class="topo-lista">
+        <h2>Contas Cadastradas</h2>
+        <a href="/contas/nova" class="btn btn-primary" id="btn-nova-conta">+ Nova Conta</a>
+    </div>
+
+    <div th:if="${#lists.isEmpty(contas)}" class="sem-contas" id="sem-contas">
+        Nenhuma conta cadastrada ainda.
+    </div>
+
+    <table th:unless="${#lists.isEmpty(contas)}" id="tabela-contas">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Saldo</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="conta : ${contas}" th:attr="data-id=${conta.id}">
+                <td th:text="${conta.id}"></td>
+                <td th:text="${conta.nome}" class="nome-conta"></td>
+                <td th:text="${#numbers.formatDecimal(conta.saldo, 1, 2)}" class="saldo-conta"></td>
+                <td>
+                    <a th:href="@{/contas/{id}/editar(id=${conta.id})}"
+                       class="btn btn-editar">Editar</a>
+
+                    <form th:action="@{/contas/{id}/excluir(id=${conta.id})}"
+                          method="post" style="display:inline;"
+                          onsubmit="return confirm('Confirma a exclusão desta conta?')">
+                        <button type="submit" class="btn btn-excluir">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>
