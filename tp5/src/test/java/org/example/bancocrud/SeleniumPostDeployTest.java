@@ -1,22 +1,14 @@
 package org.example.bancocrud;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import org.example.bancocrud.service.ContaService;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
-// esse teste roda depois do deploy pra garantir que a aplicacao subiu certinho
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest
 @ActiveProfiles("test")
 class SeleniumPostDeployTest {
 
@@ -25,7 +17,6 @@ class SeleniumPostDeployTest {
 
     @Test
     void sistemaSobeFuncionando() {
-        // verifica que o sistema inicializou e consegue executar operacoes basicas
         contaService.incluirContaDb("Teste Deploy", 100.0);
         var contas = contaService.consultarContasDb();
         assertFalse(contas.isEmpty(), "Sistema deve estar operacional apos o deploy");
