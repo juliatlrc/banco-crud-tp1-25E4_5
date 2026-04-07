@@ -1,0 +1,37 @@
+name: CI - build e testes
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: fazer o build
+        run: mvn clean package -DskipTests
+      - name: rodar os testes
+        run: mvn test
+        env:
+          SPRING_PROFILES_ACTIVE: test
+      - name: salvar relatorio
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorio-testes
+          path: target/surefire-reports/
+      - name: resumo no github
+        if: always()
+        run: |
+          echo "## CI - ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "Status: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+          echo "Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+
