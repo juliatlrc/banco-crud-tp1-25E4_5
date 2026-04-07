@@ -9,6 +9,9 @@ on:
 jobs:
   codeql:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tp5
     permissions:
       security-events: write
       actions: read
